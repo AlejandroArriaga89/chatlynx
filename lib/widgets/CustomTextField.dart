@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
+  final bool isEmail;
   final TextEditingController controller;
 
   const CustomTextField({
@@ -10,15 +11,28 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.controller,
+    required this.isEmail,
   });
+
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Por favor ingrese un correo electrónico';
+    }
+    final emailPattern = RegExp(r'^[^@]+@itcelaya\.edu\.mx$');
+    if (!emailPattern.hasMatch(value)) {
+      return 'Ingrese un correo con la terminación @itcelaya.edu.mx';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(25.0),
-      child: TextField(
+      child: TextFormField(
         obscureText: obscureText,
         controller: controller,
+        validator: isEmail ? emailValidator : null,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(

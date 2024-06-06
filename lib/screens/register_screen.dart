@@ -1,3 +1,4 @@
+import 'package:chatlynx/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/widgets.dart';
@@ -15,7 +16,29 @@ class RegisterScreen extends StatelessWidget {
     this.onTap,
   });
 
-  void register() {}
+  void register(BuildContext context) {
+    final _auth = AuthService();
+    if (_passwordController.text == _confirmPasswordController.text) {
+      try {
+        _auth.signUpWithEmailPassword(
+            _emailController.text, _passwordController.text);
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Las contraseñas no coinciden"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +67,7 @@ class RegisterScreen extends StatelessWidget {
               height: 25,
             ),
             CustomTextField(
+              isEmail: true,
               hintText: "Email",
               obscureText: false,
               controller: _emailController,
@@ -52,6 +76,7 @@ class RegisterScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              isEmail: false,
               hintText: "Contraseña",
               obscureText: true,
               controller: _passwordController,
@@ -60,6 +85,7 @@ class RegisterScreen extends StatelessWidget {
               height: 10,
             ),
             CustomTextField(
+              isEmail: false,
               hintText: "Confirmar contraseña",
               obscureText: true,
               controller: _confirmPasswordController,
@@ -69,7 +95,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             CustomButton(
               text: 'Registrarse',
-              onTap: register,
+              onTap: () => register(context),
             ),
             const SizedBox(
               height: 25,
