@@ -5,6 +5,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final bool isEmail;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
@@ -12,6 +13,7 @@ class CustomTextField extends StatelessWidget {
     required this.obscureText,
     required this.controller,
     required this.isEmail,
+    this.focusNode,
   });
 
   String? emailValidator(String? value) {
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         obscureText: obscureText,
         controller: controller,
+        focusNode: focusNode,
         validator: isEmail ? emailValidator : null,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
