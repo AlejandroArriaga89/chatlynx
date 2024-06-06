@@ -1,3 +1,6 @@
+import 'package:chatlynx/auth/login_or_register.dart';
+import 'package:chatlynx/screens/screens.dart';
+import 'package:chatlynx/themes/light_mode.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,12 +12,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      home: LoginOrRegister(),
+      debugShowCheckedModeBanner: false,
+      routes: {
+        'Login': (context) => LoginScreen(),
+        'Register': (context) => RegisterScreen(),
+      },
+      theme: lightmode,
     );
   }
 }
